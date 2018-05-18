@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.StudentController">
+    <children>
+        <MenuBar prefHeight="14.0" prefWidth="776.0" VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Menu">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Main Menu"/>
+                        <MenuItem mnemonicParsing="false" text="StudentCRUD"/>
+                        <MenuItem mnemonicParsing="false" text="TemaCRUD"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Close"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane layoutX="6.0" layoutY="18.0" maxHeight="-1.0" maxWidth="-1.0" prefHeight="349.0" prefWidth="765.0"
+                    VBox.vgrow="ALWAYS">
+            <children>
+                <TableView fx:id="tableView" layoutX="321.0" layoutY="22.0" prefHeight="343.0" prefWidth="412.0">
+                    <columns>
+                        <TableColumn fx:id="tableColumnIdStudent" prefWidth="73.0" text="idStudent"/>
+                        <TableColumn fx:id="tableColumnNume" prefWidth="117.0" text="nume"/>
+                        <TableColumn fx:id="tableColumnGrupa" prefWidth="52.0" text="grupa"/>
+                        <TableColumn fx:id="tableColumnEmail" prefWidth="83.0" text="email"/>
+                        <TableColumn fx:id="tableColumnProf" prefWidth="86.0" text="prof"/>
+                    </columns>
+                </TableView>
+                <TextField fx:id="textFieldProf" layoutX="14.0" layoutY="250.0" prefHeight="25.0" prefWidth="299.0"/>
+                <Label layoutX="14.0" layoutY="233.0" prefHeight="17.0" prefWidth="299.0"
+                       text="profesorul coordonator"/>
+                <Label layoutX="14.0" layoutY="191.0" prefHeight="17.0" prefWidth="299.0" text="email"/>
+                <TextField fx:id="textFieldEmail" layoutX="14.0" layoutY="208.0" prefHeight="25.0" prefWidth="299.0"/>
+                <Label layoutX="14.0" layoutY="149.0" prefHeight="17.0" prefWidth="299.0" text="grupa"/>
+                <Label layoutX="14.0" layoutY="107.0" prefHeight="17.0" prefWidth="299.0" text="numele"/>
+                <Label layoutX="14.0" layoutY="65.0" prefHeight="17.0" prefWidth="299.0" text="id-ul Studentului"/>
+                <TextField fx:id="textFieldGrupa" layoutX="14.0" layoutY="166.0" prefHeight="25.0" prefWidth="299.0"/>
+                <TextField fx:id="textFieldNume" layoutX="14.0" layoutY="124.0" prefHeight="25.0" prefWidth="299.0"/>
+                <TextField fx:id="textFieldIdStudent" layoutX="14.0" layoutY="82.0" prefHeight="25.0"
+                           prefWidth="299.0"/>
+                <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleAddStudent"
+                        prefHeight="43.0" prefWidth="60.0" text="ADD" textAlignment="CENTER">
+                    <font>
+                        <Font size="15.0"/>
+                    </font>
+                </Button>
+                <Button layoutX="130.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleDeleteStudent"
+                        prefHeight="43.0" prefWidth="67.0" text="DELETE" textAlignment="CENTER">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Button>
+                <Button layoutX="246.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleUpdateStudent"
+                        prefHeight="43.0" prefWidth="67.0" text="UPDATE" textAlignment="CENTER">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Button>
+                <ChoiceBox fx:id="choiceBox" layoutX="14.0" layoutY="339.0" prefHeight="25.0" prefWidth="299.0"
+                           value="default">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="default"/>
+                            <String fx:value="Info Romana"/>
+                            <String fx:value="dupa Prof"/>
+                            <String fx:value="dupa Grupa"/>
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+                <Label layoutX="14.0" layoutY="322.0" prefHeight="17.0" prefWidth="299.0"
+                       text="Sortare &amp; Filtrare"/>
+                <Button layoutX="14.0" layoutY="286.0" mnemonicParsing="false" onAction="#handleClearFields"
+                        text="ClearFields"/>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

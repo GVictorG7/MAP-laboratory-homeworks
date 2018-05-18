@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.String?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="view.NotaController">
+    <children>
+        <MenuBar layoutX="7.0" layoutY="2.0" prefHeight="25.0" prefWidth="584.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TableView fx:id="tableView" layoutX="341.0" layoutY="34.0" prefHeight="358.0" prefWidth="245.0">
+            <columns>
+                <TableColumn fx:id="tableColumnStudent" prefWidth="75.0" text="Student"/>
+                <TableColumn fx:id="tableColumnTema" prefWidth="75.0" text="Tema"/>
+                <TableColumn fx:id="tableColumNota" prefWidth="75.0" text="Nota"/>
+            </columns>
+        </TableView>
+        <TextField fx:id="textFieldStudent" layoutX="44.0" layoutY="88.0"/>
+        <TextField fx:id="textFieldTema" layoutX="44.0" layoutY="130.0"/>
+        <TextField fx:id="textFieldNota" layoutX="44.0" layoutY="172.0"/>
+        <TextField fx:id="textFieldSaptamana" layoutX="44.0" layoutY="213.0"/>
+        <TextArea fx:id="textAreaObservatii" layoutX="45.0" layoutY="255.0" prefHeight="82.0" prefWidth="291.0"/>
+        <Button layoutX="44.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleNotare" prefHeight="36.0"
+                prefWidth="60.0" text="ADD"/>
+        <Button layoutX="136.0" layoutY="34.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="63.0"
+                text="UPDATE"/>
+        <Button layoutX="227.0" layoutY="34.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="63.0"
+                text="REMOVE"/>
+        <Label layoutX="44.0" layoutY="71.0" prefHeight="17.0" prefWidth="149.0" text="ID-ul Studentului"/>
+        <Label layoutX="44.0" layoutY="113.0" prefHeight="17.0" prefWidth="149.0" text="Numarul Temei"/>
+        <Label layoutX="44.0" layoutY="155.0" prefHeight="17.0" prefWidth="149.0" text="Valoarea Notei"/>
+        <Label layoutX="44.0" layoutY="197.0" prefHeight="17.0" prefWidth="149.0" text="Saptamana predarii temeti"/>
+        <Label layoutX="44.0" layoutY="238.0" prefHeight="17.0" prefWidth="149.0" text="Observatii la tema"/>
+        <ChoiceBox fx:id="choiceBox" layoutX="45.0" layoutY="361.0" prefWidth="150.0" value="default">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="default"/>
+                    <String fx:value="student"/>
+                    <String fx:value="tema"/>
+                    <String fx:value="sub 5"/>
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+        <Label layoutX="45.0" layoutY="344.0" prefHeight="17.0" prefWidth="149.0" text="Filtrare &amp; Sortare"/>
+        <Button layoutX="227.0" layoutY="101.0" mnemonicParsing="false" onAction="#clearFields" text="Clear Fields"/>
+    </children>
+</AnchorPane>

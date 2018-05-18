@@ -1,0 +1,3 @@
+Adaugare nota
+Student: 2; Tema: 2; Nota: 8; Predata in saptamana: 7
+Observatii: cam tarziu... scz...;

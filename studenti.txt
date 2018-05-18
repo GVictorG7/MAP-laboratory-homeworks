@@ -1,0 +1,3 @@
+1;nume1;224;email1;prof
+2;nume2;224;email2;prof
+3;nume3;925;email3;prof

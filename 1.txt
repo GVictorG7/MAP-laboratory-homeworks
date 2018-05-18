@@ -1,0 +1,8 @@
+Modificare nota
+Student: 1; Tema: 1; Nota: 8; Predata in saptamana: 4
+Adaugare nota
+Student: 1; Tema: 2; Nota: 4; Predata in saptamana: 7
+Observatii: cam rau....;
+Modificare nota
+Student: 1; Tema: 2; Nota: 6; Predata in saptamana: 8
+Observatii: cam tarziu;

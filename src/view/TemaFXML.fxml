@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+<AnchorPane prefHeight="371.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TemaController">
+    <children>
+        <MenuBar prefHeight="25.0" prefWidth="50.0" VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="MainMenu"/>
+                        <MenuItem mnemonicParsing="false" text="StudentCRUD"/>
+                        <MenuItem mnemonicParsing="false" text="TemaCRUD"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane layoutX="7.0" layoutY="32.0" maxHeight="-1.0" maxWidth="-1.0" prefHeight="327.0" prefWidth="606.0"
+                    VBox.vgrow="ALWAYS">
+            <children>
+                <TableView fx:id="tableView" layoutX="313.0" layoutY="18.0" prefHeight="309.0" prefWidth="310.0">
+                    <columns>
+                        <TableColumn fx:id="tableColumnNumar" prefWidth="41.0" text="numar"/>
+                        <TableColumn fx:id="tableColumnDeadline" prefWidth="54.0" text="deadline"/>
+                        <TableColumn fx:id="tableColumnDescriere" prefWidth="214.0" text="descriere"/>
+                    </columns>
+                </TableView>
+                <TextField fx:id="textFieldNumar" layoutX="44.0" layoutY="94.0" prefHeight="25.0" prefWidth="220.0"/>
+                <TextField fx:id="textFieldDeadline" layoutX="44.0" layoutY="139.0" prefHeight="25.0"
+                           prefWidth="220.0"/>
+                <TextField fx:id="textFieldDescriere" layoutX="44.0" layoutY="181.0" prefHeight="25.0"
+                           prefWidth="220.0"/>
+                <Button layoutX="43.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleAddTema"
+                        prefHeight="37.0" prefWidth="63.0" text="ADD"/>
+                <Button layoutX="141.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleUpdateTema"
+                        prefHeight="37.0" prefWidth="63.0" text="UPDATE"/>
+                <Button layoutX="233.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleDeleteTema"
+                        prefHeight="37.0" prefWidth="63.0" text="REMOVE"/>
+                <Button layoutX="45.0" layoutY="225.0" mnemonicParsing="false" onAction="#clearFields"
+                        text="ClearFields"/>
+                <Label layoutX="44.0" layoutY="77.0" prefHeight="17.0" prefWidth="220.0" text="Numar"/>
+                <Label layoutX="45.0" layoutY="119.0" prefHeight="17.0" prefWidth="220.0" text="Deadline"/>
+                <Label layoutX="45.0" layoutY="164.0" prefHeight="17.0" prefWidth="220.0" text="Descriere"/>
+                <Label layoutX="45.0" layoutY="260.0" prefHeight="17.0" prefWidth="220.0"
+                       text="Sortare &amp; Filtrare"/>
+                <ChoiceBox fx:id="choiceBox" layoutX="43.0" layoutY="277.0" prefHeight="25.0" prefWidth="220.0"
+                           value="default">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="default"/>
+                            <String fx:value="deadline"/>
+                            <String fx:value="descriere"/>
+                            <String fx:value="urmatoarele 2 saptamani"/>
+                        </FXCollections>
+                    </items>
+                </ChoiceBox>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
