@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 public class FileRepoStudenti extends RepoStudenti {
-    private String filename;
+    private final String filename;
 
     public FileRepoStudenti(String filename) {
         this.filename = filename;
@@ -20,9 +20,7 @@ public class FileRepoStudenti extends RepoStudenti {
 
     private void loadData() {
         Path path = Paths.get("studenti.txt");
-        Stream<String> lines;
-        try {
-            lines = Files.lines(path);
+        try (Stream<String> lines = Files.lines(path)) {
             lines.forEach(ln -> {
                 String[] s = ln.split(";");
                 super.save(new Student(Integer.parseInt(s[0]), s[1], Integer.parseInt(s[2]), s[3], s[4]));

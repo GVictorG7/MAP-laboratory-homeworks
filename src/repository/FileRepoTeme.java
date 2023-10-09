@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 public class FileRepoTeme extends RepoTeme {
-    private String filename;
+    private final String filename;
 
     public FileRepoTeme(String filename) {
         this.filename = filename;
@@ -20,22 +20,11 @@ public class FileRepoTeme extends RepoTeme {
 
     private void loadData() {
         Path path = Paths.get("teme.txt");
-        Stream<String> lines;
-        try {
-            lines = Files.lines(path);
+        try (Stream<String> lines = Files.lines(path)){
             lines.forEach(ln -> {
                 String[] s = ln.split(";");
                 super.save(new Tema(Integer.parseInt(s[0]), Integer.parseInt(s[1]), s[2]));
             });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveToFile(Tema t) {
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(filename, true))) {
-            out.newLine();
-            out.write(t.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

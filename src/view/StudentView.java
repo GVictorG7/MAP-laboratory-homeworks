@@ -1,23 +1,29 @@
 package view;
 
 import domain.Student;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class StudentView {
 
-    private TextField txtfieldidStudent = new TextField();
-    private TextField txtfieldNume = new TextField();
-    private TextField txtfieldGrupa = new TextField();
-    private TextField txtfieldEmail = new TextField();
-    private TextField txtfieldProf = new TextField();
+    private final TextField txtfieldidStudent = new TextField();
+    private final TextField txtfieldNume = new TextField();
+    private final TextField txtfieldGrupa = new TextField();
+    private final TextField txtfieldEmail = new TextField();
+    private final TextField txtfieldProf = new TextField();
     private TableView<Student> tableView = new TableView<>();
-    private StudentController ctrl;
+    private final StudentController ctrl;
     private BorderPane borderPane;
 
     public StudentView(StudentController ctrl) {
@@ -114,12 +120,7 @@ public class StudentView {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
         colProf.setCellValueFactory(new PropertyValueFactory<>("Prof"));
         tableView.setItems(ctrl.getModel());
-        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends Student> observable, Student oldValue, Student newValue) {
-                ctrl.showStudentDetails(newValue);
-            }
-        });
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> ctrl.showStudentDetails(newValue));
         return tableView;
     }
 

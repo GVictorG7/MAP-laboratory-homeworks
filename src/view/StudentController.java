@@ -2,12 +2,15 @@ package view;
 
 import domain.Student;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import service.StudentService;
 import utils.ListEvent;
@@ -16,8 +19,6 @@ import validator.ValidationException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class StudentController implements Observer<Student> {
     @FXML
@@ -34,9 +35,8 @@ public class StudentController implements Observer<Student> {
     TableColumn tableColumnProf;
     @FXML
     ChoiceBox<String> choiceBox;
-    private ObservableList<Student> model;
+    private final ObservableList<Student> model;
     private StudentService studentService;
-    private StudentView view;
     @FXML
     private TextField textFieldIdStudent;
     @FXML
@@ -50,8 +50,7 @@ public class StudentController implements Observer<Student> {
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
-        List<Student> st = new ArrayList<>();
-        studentService.getStudenti().forEach(st::add);
+        List<Student> st = new ArrayList<>(studentService.getStudenti());
         model = FXCollections.observableArrayList(st);
     }
 
@@ -80,62 +79,45 @@ public class StudentController implements Observer<Student> {
 
         ObservableList<Student> filtered = FXCollections.observableArrayList();
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                switch (newValue) {
-                    case "default":
-                        tableView.setItems(model);
-                        break;
-                    case "Info Romana":
-                        filtered.clear();
-                        filtered.addAll(studentService.filtrareIR());
-                        tableView.setItems(filtered);
-                        break;
-                    case "dupa Prof":
-                        filtered.clear();
-                        String prof = textFieldProf.getText();
-                        filtered.addAll(studentService.filtrareProf(prof));
-                        tableView.setItems(filtered);
-                        break;
-                    case "dupa Grupa":
-                        filtered.clear();
-                        int grupa = Integer.parseInt(textFieldGrupa.getText());
-                        filtered.addAll(studentService.filtrareGrupa(grupa));
-                        tableView.setItems(filtered);
-                }
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue) {
+                case "default":
+                    tableView.setItems(model);
+                    break;
+                case "Info Romana":
+                    filtered.clear();
+                    filtered.addAll(studentService.filtrareIR());
+                    tableView.setItems(filtered);
+                    break;
+                case "dupa Prof":
+                    filtered.clear();
+                    String prof = textFieldProf.getText();
+                    filtered.addAll(studentService.filtrareProf(prof));
+                    tableView.setItems(filtered);
+                    break;
+                case "dupa Grupa":
+                    filtered.clear();
+                    int grupa = Integer.parseInt(textFieldGrupa.getText());
+                    filtered.addAll(studentService.filtrareGrupa(grupa));
+                    tableView.setItems(filtered);
             }
         });
 
-        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Student>() {
-            @Override
-            public void changed(ObservableValue<? extends Student> observable, Student oldValue, Student newValue) {
-                showStudentDetails(newValue);
-            }
-        });
+        tableView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Student>) (observable, oldValue, newValue) -> showStudentDetails(newValue));
     }
 
     @Override
     public void notifyEvent(ListEvent<Student> e) {
-        model.setAll(StreamSupport.stream(e.getList().spliterator(), false).collect(Collectors.toList()));
+        model.setAll(new ArrayList<>(e.getList()));
     }
 
-    public void setService(StudentService ser) {
+    void setService(StudentService ser) {
         studentService = ser;
-        List<Student> st = new ArrayList<>();
-        studentService.getStudenti().forEach(st::add);
+        List<Student> st = new ArrayList<>(studentService.getStudenti());
         this.model.setAll(st);
     }
 
-    public StudentView getView() {
-        return view;
-    }
-
-    public void setView(StudentView view) {
-        this.view = view;
-    }
-
-    public ObservableList<Student> getModel() {
+    ObservableList<Student> getModel() {
         return model;
     }
 
@@ -190,7 +172,7 @@ public class StudentController implements Observer<Student> {
         return new Student(id, nume, grupa, email, prof);
     }
 
-    public void showStudentDetails(Student newValue) {
+    void showStudentDetails(Student newValue) {
         if (newValue != null) {
             textFieldIdStudent.setText(Integer.toString(newValue.getIdStudent()));
             textFieldNume.setText(newValue.getNume());

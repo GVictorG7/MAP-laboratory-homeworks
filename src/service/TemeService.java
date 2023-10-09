@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class TemeService implements Observable<Tema> {
-    private ArrayList<Observer<Tema>> temaObserver = new ArrayList<>();
-    private FileRepoTeme teme;
-    private TemaValidator valiTema;
+    private final ArrayList<Observer<Tema>> temaObserver = new ArrayList<>();
+    private final FileRepoTeme teme;
+    private final TemaValidator valiTema;
 
     public TemeService() {
         this.teme = new FileRepoTeme("teme.txt");
@@ -42,27 +42,14 @@ public class TemeService implements Observable<Tema> {
     /**
      * se sterge tema cu id-ul specificat
      *
-     * @param id
-     * @return tema stearsa
+     * @param id id-ul temei sterse
      */
-    public Tema deleteTema(int id) {
+    public void deleteTema(int id) {
         Tema t = teme.delete(id);
         List<Tema> tem = new ArrayList<>();
         teme.findAll().forEach(tem::add);
         ListEvent<Tema> ev = createEvent(ListEventType.REMOVE, t, tem);
         notifyObservers(ev);
-        return t;
-    }
-
-    /**
-     * se modifica deadline-ul temei cu id-ul specificat
-     *
-     * @param id          id-ul teme careia modificam deadline-ul
-     * @param newDeadline noul deadline al temei
-     * @return tema cu deadline-ul vechi
-     */
-    public Tema modifyDeadline(int id, int newDeadline) {
-        return teme.modifyDeadline(id, newDeadline);
     }
 
     /**
@@ -94,8 +81,9 @@ public class TemeService implements Observable<Tema> {
 
     private <E> List<E> filterSorter(List<E> lista, Predicate<E> p, Comparator<E> c) {
         List<E> rez = new ArrayList<>();
-        for (E e : lista)
+        for (E e : lista) {
             if (p.test(e)) rez.add(e);
+        }
         rez.sort(c);
         return rez;
     }
@@ -104,7 +92,7 @@ public class TemeService implements Observable<Tema> {
         List<Tema> tem = new ArrayList<>();
         teme.findAll().forEach(tem::add);
         Predicate<Tema> p = x -> x.getDeadline() == deadline;
-        Comparator<Tema> c = (x, y) -> x.getNr() - y.getNr();
+        Comparator<Tema> c = Comparator.comparingInt(Tema::getNr);
         return filterSorter(tem, p, c);
     }
 
@@ -112,15 +100,15 @@ public class TemeService implements Observable<Tema> {
         List<Tema> tem = new ArrayList<>();
         teme.findAll().forEach(tem::add);
         Predicate<Tema> p = x -> x.getDescriere().toLowerCase().contains(cuv.toLowerCase());
-        Comparator<Tema> c = (x, y) -> x.getDeadline() - y.getDeadline();
+        Comparator<Tema> c = Comparator.comparingInt(Tema::getDeadline);
         return filterSorter(tem, p, c);
     }
 
     public List<Tema> filtrareNext2Weeks(int saptamana) {
         List<Tema> tem = new ArrayList<>();
         teme.findAll().forEach(tem::add);
-        Predicate<Tema> p = x -> x.getDeadline() >= saptamana & x.getDeadline() <= saptamana + 2;
-        Comparator<Tema> c = (x, y) -> x.getDeadline() - y.getDeadline();
+        Predicate<Tema> p = x -> x.getDeadline() >= saptamana && x.getDeadline() <= saptamana + 2;
+        Comparator<Tema> c = Comparator.comparingInt(Tema::getDeadline);
         return filterSorter(tem, p, c);
     }
 
@@ -129,7 +117,6 @@ public class TemeService implements Observable<Tema> {
         temaObserver.add(o);
     }
 
-    @Override
     public void removeObserver(Observer<Tema> o) {
         temaObserver.remove(o);
     }

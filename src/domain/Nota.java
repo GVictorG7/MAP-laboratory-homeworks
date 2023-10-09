@@ -66,7 +66,7 @@ public class Nota {
     /**
      * setter pentru valoarea notei
      *
-     * @param valoare
+     * @param valoare valoarea noii note
      */
     public void setValoare(int valoare) {
         this.valoare = valoare;
@@ -74,6 +74,6 @@ public class Nota {
 
     @Override
     public String toString() {
-        return Integer.toString(student) + ";" + Integer.toString(tema) + ";" + Integer.toString(valoare);
+        return student + ";" + tema + ";" + valoare;
     }
 }

@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 public class FileRepoNote extends RepoNote {
-    private String filename;
+    private final String filename;
 
     public FileRepoNote(String filename) {
         this.filename = filename;
@@ -20,9 +20,7 @@ public class FileRepoNote extends RepoNote {
 
     private void loadData() {
         Path path = Paths.get("note.txt");
-        Stream<String> lines;
-        try {
-            lines = Files.lines(path);
+        try (Stream<String> lines = Files.lines(path)) {
             lines.forEach(ln -> {
                 String[] s = ln.split(";");
                 super.save(new Nota(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2])));
@@ -44,14 +42,14 @@ public class FileRepoNote extends RepoNote {
     }
 
     private void saveToFile(Nota nota, String observatii, int saptamanaPredare, String status) {
-        String filenameStudent = Integer.toString(nota.getStudent()) + ".txt";
+        String filenameStudent = nota.getStudent() + ".txt";
         try (BufferedWriter out = new BufferedWriter(new FileWriter(filenameStudent, true))) {
             out.write(status);
             out.newLine();
-            out.write("Student: " + Integer.toString(nota.getStudent()) +
-                    "; Tema: " + Integer.toString((nota.getTema())) +
-                    "; Nota: " + Integer.toString(nota.getValoare()) +
-                    "; Predata in saptamana: " + Integer.toString(saptamanaPredare));
+            out.write("Student: " + nota.getStudent() +
+                    "; Tema: " + nota.getTema() +
+                    "; Nota: " + nota.getValoare() +
+                    "; Predata in saptamana: " + saptamanaPredare);
             out.newLine();
             if (!observatii.isEmpty()) {
                 out.write("Observatii: " + observatii + ";");

@@ -1,16 +1,19 @@
 package domain;
 
 public class Student {
-    private int idStudent, grupa;
-    private String nume, email, prof;
+    private final int idStudent;
+    private final int grupa;
+    private final String nume;
+    private final String email;
+    private final String prof;
 
     /**
      * constructor pentru un Student
      *
      * @param idStudent numarul matricol al studentului
-     * @param nume
-     * @param grupa
-     * @param email
+     * @param nume      numele studentului
+     * @param grupa     grupa din care face parte
+     * @param email     email-ul studentului
      * @param prof      cadrul didactic indrumator de la lab
      */
     public Student(int idStudent, String nume, int grupa, String email, String prof) {
@@ -68,6 +71,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return Integer.toString(idStudent) + ";" + nume + ";" + Integer.toString(grupa) + ";" + email + ";" + prof;
+        return idStudent + ";" + nume + ";" + grupa + ";" + email + ";" + prof;
     }
 }

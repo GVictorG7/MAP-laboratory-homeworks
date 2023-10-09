@@ -4,9 +4,8 @@ public interface Validator<E> {
     /**
      * se valideaza entitatea primita ca parametru
      *
-     * @param entity
-     * @return true daca entitatea e valida
+     * @param entity entitatea validata
      * @throws ValidationException daca entiatetea nu e valida
      */
-    boolean validate(E entity) throws ValidationException;
+    void validate(E entity) throws ValidationException;
 }

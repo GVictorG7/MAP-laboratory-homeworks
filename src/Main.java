@@ -3,7 +3,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import view.MainController;
 
 import java.io.IOException;
 
@@ -20,7 +19,6 @@ public class Main extends Application {
         AnchorPane rootLayout;
         try {
             rootLayout = loader.load();
-            MainController rootController = loader.getController();
             primaryStage.setScene(new Scene(rootLayout, 525, 250));
             primaryStage.setTitle("Main");
             primaryStage.show();

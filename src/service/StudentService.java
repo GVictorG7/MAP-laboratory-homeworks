@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class StudentService implements Observable<Student> {
-    private ArrayList<Observer<Student>> studentObserver = new ArrayList<>();
-    private FileRepoStudenti studenti;
-    private StudentValidator valiStudent;
+    private final ArrayList<Observer<Student>> studentObserver = new ArrayList<>();
+    private final FileRepoStudenti studenti;
+    private final StudentValidator valiStudent;
 
     /**
      * constructor pentru StudentService
@@ -51,23 +51,13 @@ public class StudentService implements Observable<Student> {
      * se sterge studentul cu id-ul specificat
      *
      * @param id-ul stidentului sters
-     * @return studentul sters
      */
-    public Student deleteStudent(int id) {
-//        Iterator<Nota> iter = note.findAll().iterator();
-//        while (iter.hasNext()) {
-//            Nota n = iter.next();
-//            if (n.getStudent()==id)
-//                iter.remove();
-//        }
-        //TODO metoda de delete notification pt note la stergerea unui st/teme
-//        note.saveToFileAll();
+    public void deleteStudent(int id) {
         Student r = studenti.delete(id);
         List<Student> st = new ArrayList<>();
         studenti.findAll().forEach(st::add);
         ListEvent<Student> ev = createEvent(ListEventType.REMOVE, r, st);
         notifyObservers(ev);
-        return r;
     }
 
     /**
@@ -99,8 +89,9 @@ public class StudentService implements Observable<Student> {
 
     private <E> List<E> filterSorter(List<E> lista, Predicate<E> p, Comparator<E> c) {
         List<E> rez = new ArrayList<>();
-        for (E e : lista)
+        for (E e : lista) {
             if (p.test(e)) rez.add(e);
+        }
         rez.sort(c);
         return rez;
     }
@@ -108,8 +99,8 @@ public class StudentService implements Observable<Student> {
     public List<Student> filtrareIR() {
         List<Student> st = new ArrayList<>();
         studenti.findAll().forEach(st::add);
-        Predicate<Student> p = x -> x.getGrupa() >= 200 & x.getGrupa() < 300;
-        Comparator<Student> c = (x, y) -> x.getGrupa() - y.getGrupa();
+        Predicate<Student> p = x -> x.getGrupa() >= 200 && x.getGrupa() < 300;
+        Comparator<Student> c = Comparator.comparingInt(Student::getGrupa);
         return filterSorter(st, p, c);
     }
 
@@ -117,7 +108,7 @@ public class StudentService implements Observable<Student> {
         List<Student> st = new ArrayList<>();
         studenti.findAll().forEach(st::add);
         Predicate<Student> p = x -> x.getProf().equals(prof);
-        Comparator<Student> c = (x, y) -> x.getGrupa() - y.getGrupa();
+        Comparator<Student> c = Comparator.comparingInt(Student::getGrupa);
         return filterSorter(st, p, c);
     }
 
@@ -125,7 +116,7 @@ public class StudentService implements Observable<Student> {
         List<Student> st = new ArrayList<>();
         studenti.findAll().forEach(st::add);
         Predicate<Student> p = x -> x.getGrupa() == grupa;
-        Comparator<Student> c = (x, y) -> x.getNume().compareTo(y.getNume());
+        Comparator<Student> c = Comparator.comparing(Student::getNume);
         return filterSorter(st, p, c);
     }
 
@@ -134,7 +125,6 @@ public class StudentService implements Observable<Student> {
         studentObserver.add(o);
     }
 
-    @Override
     public void removeObserver(Observer<Student> o) {
         studentObserver.remove(o);
     }

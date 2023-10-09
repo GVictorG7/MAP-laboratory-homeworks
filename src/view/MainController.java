@@ -13,9 +13,9 @@ import service.TemeService;
 import java.io.IOException;
 
 public class MainController {
-    private StudentService studentService = new StudentService();
-    private TemeService temeService = new TemeService();
-    private NoteService noteService = new NoteService();
+    private final StudentService studentService = new StudentService();
+    private final TemeService temeService = new TemeService();
+    private final NoteService noteService = new NoteService();
 
     public void handleLaunchStudentCRUD(ActionEvent actionEvent) {
         try {

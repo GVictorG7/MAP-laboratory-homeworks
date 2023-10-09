@@ -2,12 +2,16 @@ package view;
 
 import domain.Nota;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import service.NoteService;
 import utils.ListEvent;
@@ -15,8 +19,6 @@ import utils.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class NotaController implements Observer<Nota> {
     @FXML
@@ -29,7 +31,7 @@ public class NotaController implements Observer<Nota> {
     TableColumn tableColumNota;
     @FXML
     ChoiceBox<String> choiceBox;
-    private ObservableList<Nota> model = FXCollections.observableArrayList();
+    private final ObservableList<Nota> model = FXCollections.observableArrayList();
     private NoteService service;
     @FXML
     private TextField textFieldStudent;
@@ -51,49 +53,40 @@ public class NotaController implements Observer<Nota> {
 
         ObservableList<Nota> filtered = FXCollections.observableArrayList();
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                switch (newValue) {
-                    case "default":
-                        tableView.setItems(model);
-                        break;
-                    case "student":
-                        filtered.clear();
-                        filtered.addAll(service.filtrareNoteStudent(Integer.parseInt(textFieldStudent.getText())));
-                        tableView.setItems(filtered);
-                        break;
-                    case "tema":
-                        filtered.clear();
-                        filtered.addAll(service.filtrareNoteTema(Integer.parseInt(textFieldTema.getText())));
-                        tableView.setItems(filtered);
-                        break;
-                    case "sub 5":
-                        filtered.clear();
-                        filtered.addAll(service.filtrareNoteSub5());
-                        tableView.setItems(filtered);
-                        break;
-                }
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue) {
+                case "default":
+                    tableView.setItems(model);
+                    break;
+                case "student":
+                    filtered.clear();
+                    filtered.addAll(service.filtrareNoteStudent(Integer.parseInt(textFieldStudent.getText())));
+                    tableView.setItems(filtered);
+                    break;
+                case "tema":
+                    filtered.clear();
+                    filtered.addAll(service.filtrareNoteTema(Integer.parseInt(textFieldTema.getText())));
+                    tableView.setItems(filtered);
+                    break;
+                case "sub 5":
+                    filtered.clear();
+                    filtered.addAll(service.filtrareNoteSub5());
+                    tableView.setItems(filtered);
+                    break;
             }
         });
 
-        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Nota>() {
-            @Override
-            public void changed(ObservableValue<? extends Nota> observable, Nota oldValue, Nota newValue) {
-                showNotaDetails(newValue);
-            }
-        });
+        tableView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Nota>) (observable, oldValue, newValue) -> showNotaDetails(newValue));
     }
 
     @Override
     public void notifyEvent(ListEvent<Nota> e) {
-        model.setAll(StreamSupport.stream(e.getList().spliterator(), false).collect(Collectors.toList()));
+        model.setAll(new ArrayList<>(e.getList()));
     }
 
-    public void setService(NoteService ser) {
+    void setService(NoteService ser) {
         service = ser;
-        List<Nota> not = new ArrayList<>();
-        service.getNote().forEach(not::add);
+        List<Nota> not = new ArrayList<>(service.getNote());
         this.model.setAll(not);
     }
 

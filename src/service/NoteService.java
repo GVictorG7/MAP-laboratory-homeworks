@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class NoteService implements Observable<Nota> {
-    private ArrayList<Observer<Nota>> notaObserver = new ArrayList<>();
-    private FileRepoNote note;
+    private final ArrayList<Observer<Nota>> notaObserver = new ArrayList<>();
+    private final FileRepoNote note;
 
     public NoteService() {
         this.note = new FileRepoNote("note.txt");
@@ -67,7 +67,7 @@ public class NoteService implements Observable<Nota> {
         List<Nota> not = new ArrayList<>();
         note.findAll().forEach(not::add);
         Predicate<Nota> p = x -> x.getStudent() == stId;
-        Comparator<Nota> c = (x, y) -> x.getValoare() - y.getValoare();
+        Comparator<Nota> c = Comparator.comparingInt(Nota::getValoare);
         return filterSorter(not, p, c);
     }
 
@@ -75,7 +75,7 @@ public class NoteService implements Observable<Nota> {
         List<Nota> not = new ArrayList<>();
         note.findAll().forEach(not::add);
         Predicate<Nota> p = x -> x.getTema() == temaId;
-        Comparator<Nota> c = (x, y) -> x.getValoare() - y.getValoare();
+        Comparator<Nota> c = Comparator.comparingInt(Nota::getValoare);
         return filterSorter(not, p, c);
     }
 
@@ -83,7 +83,7 @@ public class NoteService implements Observable<Nota> {
         List<Nota> not = new ArrayList<>();
         note.findAll().forEach(not::add);
         Predicate<Nota> p = x -> x.getValoare() < 5;
-        Comparator<Nota> c = (x, y) -> x.getValoare() - y.getValoare();
+        Comparator<Nota> c = Comparator.comparingInt(Nota::getValoare);
         return filterSorter(not, p, c);
     }
 
@@ -92,7 +92,6 @@ public class NoteService implements Observable<Nota> {
         notaObserver.add(o);
     }
 
-    @Override
     public void removeObserver(Observer<Nota> o) {
         notaObserver.remove(o);
     }

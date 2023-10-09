@@ -1,37 +1,44 @@
-package ui;
-
-import service.StudentService;
-
-public class UI {
-    private StudentService studentService;
-
-    public UI() {
-        this.studentService = new StudentService();
-    }
-
+//package ui;
+//
+//import domain.Student;
+//import domain.Tema;
+//import service.StudentService;
+//import validator.ValidationException;
+//
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//
+//public class UI {
+//    private StudentService studentService;
+//
+//    public UI() {
+//        this.studentService = new StudentService();
+//    }
+//
 //    public void showMenu() {
 //        while (true) {
 //            try {
 //                System.out.println("0. Iesire din aplicatie" + '\n' +
-//                        DONE"1. Adauga un nou Student" + '\n' +
-//                        DONE"2. Adauga o Tema" + '\n' +
-//                        DONE"3. Sterge un Student" + '\n' +
-//                        DONE"4. Sterge o Tema" + '\n' +
-//                        DONE"5. Modifica un Student" + '\n' +
-//                        DONE"6. Modifica o Tema" + '\n' +
-//                        DONE"7. Modificare deadine" + '\n' +
-//                        DONE"8. Afiseaza toti Studentii" + '\n' +
-//                        DONE"9. Afiseaza toate Temele" + '\n' +
-//                        DONE"10. Acordare nota" + '\n' +
-//                        DONE"11. Toti studentii de la info romana sortati dupa grupa" + '\n' +
-//                        DONE"12. Toti studentii care fac cu un anumit profesor, ordonati dupa grupda" + '\n' +
-//                        DONE"13. Toti studentii dintr-o anumita grupa, sortati alfabetic" + '\n' +
-//                        DONE"14. Temele cu un anumit deadline, sortate dupa numar" + '\n' +
-//                        DONE"15. Temele cu un anumit cuvant in descriere, sortate dupa deadline" + '\n' +
-//                        DONE"16. Temele cu deadline in urmatoarele 2 saptamani" + '\n' +
-//                        DONE"17. Notele unui anumit student, ordonate dupa valoare" + '\n' +
-//                        DONE"18. Notele la o anumita tema, sortate dupa valoare" + '\n' +
-//                        DONE"19. Notele sub 5, ordonate dupa valoare");
+//                        "1. Adauga un nou Student" + '\n' +
+//                        "2. Adauga o Tema" + '\n' +
+//                        "3. Sterge un Student" + '\n' +
+//                        "4. Sterge o Tema" + '\n' +
+//                        "5. Modifica un Student" + '\n' +
+//                        "6. Modifica o Tema" + '\n' +
+//                        "7. Modificare deadine" + '\n' +
+//                        "8. Afiseaza toti Studentii" + '\n' +
+//                        "9. Afiseaza toate Temele" + '\n' +
+//                        "10. Acordare nota" + '\n' +
+//                        "11. Toti studentii de la info romana sortati dupa grupa" + '\n' +
+//                        "12. Toti studentii care fac cu un anumit profesor, ordonati dupa grupda" + '\n' +
+//                        "13. Toti studentii dintr-o anumita grupa, sortati alfabetic" + '\n' +
+//                        "14. Temele cu un anumit deadline, sortate dupa numar" + '\n' +
+//                        "15. Temele cu un anumit cuvant in descriere, sortate dupa deadline" + '\n' +
+//                        "16. Temele cu deadline in urmatoarele 2 saptamani" + '\n' +
+//                        "17. Notele unui anumit student, ordonate dupa valoare" + '\n' +
+//                        "18. Notele la o anumita tema, sortate dupa valoare" + '\n' +
+//                        "19. Notele sub 5, ordonate dupa valoare");
 //                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 //                int cmd = Integer.parseInt(br.readLine());
 //                switch (cmd) {
@@ -57,7 +64,7 @@ public class UI {
 //                        int deadline = Integer.parseInt((br.readLine()));
 //                        System.out.println("descrierea temei: ");
 //                        String desc = br.readLine();
-//                        studentService.save(new Tema(nr, deadline, desc));
+//                        // studentService.save(new Tema(nr, deadline, desc));
 //                        break;
 //                    case 3:
 //                        System.out.println("id-ul studentului sters: ");
@@ -65,10 +72,10 @@ public class UI {
 //                        studentService.deleteStudent(deleteId);
 //                        break;
 //                    case 4:
-//                        //studentService.deleteTema();
+////                        studentService.deleteTema();
 //                        break;
 //                    case 5:
-//                        //studentService.update();
+////                        studentService.update();
 //                        break;
 //                    case 6:
 //                        //studentService.update();
@@ -144,4 +151,4 @@ public class UI {
 //            }
 //        }
 //    }
-}
+//}

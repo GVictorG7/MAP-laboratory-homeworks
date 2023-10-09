@@ -1,8 +1,9 @@
 package domain;
 
 public class Tema {
-    private int nr, deadline;
-    private String descriere;
+    private final int nr;
+    private int deadline;
+    private final String descriere;
 
     /**
      * constructor pentru o Tema
@@ -24,15 +25,6 @@ public class Tema {
      */
     public int getNr() {
         return nr;
-    }
-
-    /**
-     * setter pentru numarul temei
-     *
-     * @param nr noul numar
-     */
-    public void setNr(int nr) {
-        this.nr = nr;
     }
 
     /**
@@ -62,17 +54,8 @@ public class Tema {
         return descriere;
     }
 
-    /**
-     * setter pentru descrierea temei
-     *
-     * @param descriere noua descriere
-     */
-    public void setDescriere(String descriere) {
-        this.descriere = descriere;
-    }
-
     @Override
     public String toString() {
-        return Integer.toString(nr) + ";" + Integer.toString(deadline) + ";" + descriere;
+        return nr + ";" + deadline + ";" + descriere;
     }
 }

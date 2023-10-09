@@ -6,7 +6,7 @@ public class RepoStudenti extends RepoGeneric<Student> {
     /**
      * contructor pentru un repo de studenti
      */
-    public RepoStudenti() {
+    RepoStudenti() {
         super();
     }
 
@@ -18,13 +18,6 @@ public class RepoStudenti extends RepoGeneric<Student> {
      */
     @Override
     public Student findOne(int id) {
-        int i = 0;
-        for (Student st : super.repo) {
-            if (st.getIdStudent() == id) {
-                return super.repo.get(i);
-            }
-            i++;
-        }
-        return null;
+        return repo.stream().filter(student -> student.getIdStudent() == id).findFirst().orElse(null);
     }
 }

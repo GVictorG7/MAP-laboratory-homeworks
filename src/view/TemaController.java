@@ -2,12 +2,15 @@ package view;
 
 import domain.Tema;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import service.TemeService;
 import utils.ListEvent;
@@ -16,8 +19,6 @@ import validator.ValidationException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class TemaController implements Observer<Tema> {
     @FXML
@@ -30,7 +31,7 @@ public class TemaController implements Observer<Tema> {
     TableColumn tableColumnDescriere;
     @FXML
     ChoiceBox<String> choiceBox;
-    private ObservableList<Tema> model = FXCollections.observableArrayList();
+    private final ObservableList<Tema> model = FXCollections.observableArrayList();
     private TemeService service;
     @FXML
     private TextField textFieldNumar;
@@ -48,54 +49,41 @@ public class TemaController implements Observer<Tema> {
 
         ObservableList<Tema> filtered = FXCollections.observableArrayList();
 
-        choiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                switch (newValue) {
-                    case "default":
-                        tableView.setItems(model);
-                        break;
-                    case "deadline":
-                        filtered.clear();
-                        filtered.addAll(service.filtrareDeadline(Integer.parseInt(textFieldDeadline.getText())));
-                        tableView.setItems(filtered);
-                        break;
-                    case "descriere":
-                        filtered.clear();
-                        filtered.addAll(service.filtrareDesc(textFieldDescriere.getText()));
-                        tableView.setItems(filtered);
-                        break;
-                    case "urmatoarele 2 saptamani":
-                        filtered.clear();
-                        filtered.addAll(service.filtrareNext2Weeks(Integer.parseInt(textFieldDeadline.getText())));
-                        tableView.setItems(filtered);
-                        break;
-                }
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue) {
+                case "default":
+                    tableView.setItems(model);
+                    break;
+                case "deadline":
+                    filtered.clear();
+                    filtered.addAll(service.filtrareDeadline(Integer.parseInt(textFieldDeadline.getText())));
+                    tableView.setItems(filtered);
+                    break;
+                case "descriere":
+                    filtered.clear();
+                    filtered.addAll(service.filtrareDesc(textFieldDescriere.getText()));
+                    tableView.setItems(filtered);
+                    break;
+                case "urmatoarele 2 saptamani":
+                    filtered.clear();
+                    filtered.addAll(service.filtrareNext2Weeks(Integer.parseInt(textFieldDeadline.getText())));
+                    tableView.setItems(filtered);
+                    break;
             }
         });
 
-        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tema>() {
-            @Override
-            public void changed(ObservableValue<? extends Tema> observable, Tema oldValue, Tema newValue) {
-                showTemaDetails(newValue);
-            }
-        });
+        tableView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Tema>) (observable, oldValue, newValue) -> showTemaDetails(newValue));
     }
 
     @Override
     public void notifyEvent(ListEvent<Tema> e) {
-        model.setAll(StreamSupport.stream(e.getList().spliterator(), false).collect(Collectors.toList()));
+        model.setAll(new ArrayList<>(e.getList()));
     }
 
-    public void setService(TemeService ser) {
+    void setService(TemeService ser) {
         service = ser;
-        List<Tema> tem = new ArrayList<>();
-        service.getTeme().forEach(tem::add);
+        List<Tema> tem = new ArrayList<>(service.getTeme());
         this.model.setAll(tem);
-    }
-
-    public ObservableList<Tema> getModel() {
-        return model;
     }
 
     public void handleAddTema(ActionEvent actionEvent) {

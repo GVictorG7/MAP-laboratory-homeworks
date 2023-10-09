@@ -9,7 +9,7 @@ public interface RepoInterface<E> {
     /**
      * functie care salveaza o noua entitate de tip generic in repo
      *
-     * @param entity
+     * @param entity entitatea salvata
      */
     void save(E entity);
 

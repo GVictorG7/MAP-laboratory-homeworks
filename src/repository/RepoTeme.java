@@ -6,7 +6,7 @@ public class RepoTeme extends RepoGeneric<Tema> {
     /**
      * contructor pentu un repo de teme
      */
-    public RepoTeme() {
+    RepoTeme() {
         super();
     }
 
@@ -17,14 +17,7 @@ public class RepoTeme extends RepoGeneric<Tema> {
      * @return entitatea cu id-ul specificat
      */
     public Tema findOne(int id) {
-        int i = 0;
-        for (Tema t : super.repo) {
-            if (t.getNr() == id) {
-                return super.repo.get(i);
-            }
-            i++;
-        }
-        return null;
+        return repo.stream().filter(tema -> tema.getNr() == id).findFirst().orElse(null);
     }
 
     /**

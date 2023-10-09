@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RepoGeneric<E> implements RepoInterface<E> {
-    protected List<E> repo;
+    List<E> repo;
 
     /**
      * Constructor pt un repo generic cu elemente de tip E
      */
-    public RepoGeneric() {
+    RepoGeneric() {
         repo = new ArrayList<>();
     }
 
@@ -23,7 +23,7 @@ public abstract class RepoGeneric<E> implements RepoInterface<E> {
     /**
      * functie care salveaza o noua entitate de tip generic in repo
      *
-     * @param entity
+     * @param entity entitatea salvata
      */
     @Override
     public void save(E entity) {
